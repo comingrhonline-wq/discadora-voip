@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Discadora VoIP</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f4f7;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h1 {
+            margin-bottom: 5px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        input, select, textarea, button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background: #16803c;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #10632e;
+        }
+
+        .contato {
+            border-top: 1px solid #ddd;
+            padding: 15px 0;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>📞 Discadora VoIP</h1>
+    <p>Central de atendimento — 1 ramal</p>
+
+    <div class="card">
+
+        <h2>Adicionar contato</h2>
+
+        <form action="/salvar" method="POST">
+
+            <label>Nome</label>
+            <input type="text" name="nome" placeholder="Nome do contato">
+
+            <label>Telefone</label>
+            <input type="text" name="telefone" placeholder="+55 13 99999-9999" required>
+
+            <label>Status</label>
+
+            <select name="status">
+                <option>Pendente</option>
+                <option>Atendeu</option>
+                <option>Não atendeu</option>
+                <option>Ocupado</option>
+                <option>Retornar</option>
+            </select>
+
+            <label>Observação</label>
+
+            <textarea
+                name="observacao"
+                placeholder="Observações da ligação"></textarea>
+
+            <button type="submit">
+                💾 Salvar contato
+            </button>
+
+        </form>
+
+    </div>
+
+    <div class="card">
+
+        <h2>📋 Contatos</h2>
+
+        {% if contatos %}
+
+            {% for contato in contatos %}
+
+                <div class="contato">
+
+                    <strong>{{ contato.nome }}</strong>
+
+                    <br>
+
+                    📞 {{ contato.telefone }}
+
+                    <br>
+
+                    <span class="status">
+                        {{ contato.status }}
+                    </span>
+
+                    {% if contato.observacao %}
+                        <br>
+                        📝 {{ contato.observacao }}
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>Nenhum contato cadastrado.</p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
